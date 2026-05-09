@@ -39,7 +39,7 @@ void APlayer_Basic::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	if (UIC)
 	{
 		UIC->BindAction(IA_Move, ETriggerEvent::Triggered, this, &APlayer_Basic::Move);
-		UIC->BindAction(IA_Move, ETriggerEvent::Triggered, this, &APlayer_Basic::Look);
+		UIC->BindAction(IA_Look, ETriggerEvent::Triggered, this, &APlayer_Basic::Look);
 	}
 
 
@@ -47,9 +47,25 @@ void APlayer_Basic::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 void APlayer_Basic::Move(const FInputActionValue& Value)
 {
+	FVector2D Direction = Value.Get<FVector2D>();
+
+	FRotator CameraRotation = GetControlRotation();
+	FRotator NewCameraRotation = FRotator(0.f, CameraRotation.Yaw, 0.f);
+
+	FVector CameraForward = UKismetMathLibrary::GetForwardVector(NewCameraRotation);
+	FVector CameraRight = UKismetMathLibrary::GetRightVector(NewCameraRotation);
+
+	AddMovementInput(CameraForward * Direction.X);
+	AddMovementInput(CameraRight * Direction.Y);
+
 }
 
 void APlayer_Basic::Look(const FInputActionValue& Value)
 {
+	FVector2D Direction = Value.Get<FVector2D>();
+
+	AddControllerYawInput(Direction.X);
+	AddControllerPitchInput(-Direction.Y);
+
 }
 

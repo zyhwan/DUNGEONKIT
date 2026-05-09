@@ -43,7 +43,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	TObjectPtr<UInputAction> IA_Look;
 
-
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 
