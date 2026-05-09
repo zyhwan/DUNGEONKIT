@@ -2,6 +2,10 @@
 
 
 #include "Player_Basic.h"
+#include "EnhancedInputComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
+
 
 // Sets default values
 APlayer_Basic::APlayer_Basic()
@@ -30,5 +34,22 @@ void APlayer_Basic::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	UEnhancedInputComponent* UIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+
+	if (UIC)
+	{
+		UIC->BindAction(IA_Move, ETriggerEvent::Triggered, this, &APlayer_Basic::Move);
+		UIC->BindAction(IA_Move, ETriggerEvent::Triggered, this, &APlayer_Basic::Look);
+	}
+
+
+}
+
+void APlayer_Basic::Move(const FInputActionValue& Value)
+{
+}
+
+void APlayer_Basic::Look(const FInputActionValue& Value)
+{
 }
 
