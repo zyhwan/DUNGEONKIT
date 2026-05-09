@@ -3,3 +3,6 @@
 
 #include "GM_Basic.h"
 
+void AGM_Basic::BeginPlay()
+{
+}
