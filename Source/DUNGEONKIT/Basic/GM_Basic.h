@@ -9,7 +9,7 @@
 
 
 /**
- * 
+ *
  */
 UCLASS()
 class DUNGEONKIT_API AGM_Basic : public AGameModeBase
@@ -18,5 +18,18 @@ class DUNGEONKIT_API AGM_Basic : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Data")
+	TObjectPtr<UDataTable> DT_DungeonData;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Data")
+	TArray<FDungeonData> DungeonDataCaches;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Data")
+	float TotalWeight = 0.f;
+
+private:
+	void SetCachedDungeonData();
+	void SetTotalWeight();
 
 };
